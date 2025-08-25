@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="ArcaLab2.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        <title>ArcaLab - Simulador de Erosão</title>
+        <meta name="author" content="Gabrielly Barros">
+        <meta name="description" content="Simulador de Erosão do Solo - Blog do ArcaLab">
+        <meta name="keywords" content="Erosão, Solo, Simulador, ArcaLab, Blog do ArcaLab">
+        <style>
+            body {
+                font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 0;
+                background-color: #4e3a00;
+            }
+            .container {
+                width: 80%;
+                margin: auto;
+                overflow: hidden;
+                padding: 20px;
+                background: white;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            h1, h2 {
+                text-align: center;
+                color: #492c00;
+            }
+            ul {
+                list-style-type: disc;
+                margin-left: 20px;
+            }
+            img {
+                display: block;
+                margin: 10px 0;
+                margin-left: auto;
+                margin-right: auto;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            p {
+                text-align: center;
+                color:#211707
+            }
+    .pergunta {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 16px 24px;
+    margin: 16px auto; /* centraliza horizontalmente */
+    max-width: 500px;
+    width: 100%;
+    text-align: left; /* mantém o texto alinhado à esquerda dentro do bloco */
+}
+
+      
+      .pergunta p {
+        margin-bottom: 10px;
+        color: #513308;
+        text-align: left;
+      }
+      .pergunta label {
+        display: block;
+        margin-bottom: 6px;
+        cursor: pointer;
+        color: #2d3a47;
+      }
+button {
+    background-color: #5a2700;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 16px auto; /* centraliza horizontalmente */
+    display: block; /* necessário para que o margin auto funcione */
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #793900; /* muda a cor quando passa o mouse */
+}
+
+      #resultado {
+        font-weight: bold;
+        color: #5e3c0a;
+        margin-bottom: 24px;
+        text-align: center;
+      }
+      .pergunta.correta {
+  border: 2px solid #4caf50;
+  background: #e8f5e9;
+}
+.pergunta.errada {
+  border: 2px solid #f44336;
+  background: #ffebee;
+}
+
+              header {
+            width: 100%;
+            background-color: #ffffffdd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            position: sticky;  /* Fica fixo ao rolar */
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        header .logo img {
+            width: 40px;
+            height: auto;
+        }
+
+        header h1, h2, p {
+            font-family: "Ubuntu", sans-serif;
+            margin: 0;
+            color:#000
+        }
+
+        header nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #2d6a4f;
+        }
+
+                .btn-carregar {
+            background-color: #07001f;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 10px;
+        }
+        .btn-carregar:hover {
+            background-color: #0d003a;
+            transform: scale(1.05);
+        }
+
+        .video-center {
+    display: block;
+    margin: 20px auto;
+    box-shadow: 0 0 12px rgba(0,0,0,0.15); /* opcional, só p/ ficar bonito */
+    border-radius: 8px; /* opcional */
+}
+.grid-imagens {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.grid-imagens img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px; /* opcional, deixa mais bonito */
+}
+
+
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Tutorial - Simulador de Erosão</h1>
+            <p>Um simulador de Erosão para você testar na sua casa!</p>
+            <h2>Baseado na Estação de Pesquisa 2 - Guardando o Relevo</h2>
+            <img src="CapturadeTelaPDF.png" alt="Captura de Tela do PDF" style="width: 600px; height: auto; margin-bottom: 20px;">
+            <h2>Materiais Necessários:</h2>
+            <img src="tudo.jpg" alt="Materiais Necessários" style="width: 300px; height: auto; margin-bottom: 20px;">
+            <ul>
+                <li>3 Caixa de papelão</li>
+                <img src="caixas.jpg" alt="Caixas de Papelão" style="width: 300px; height: auto; margin-bottom: 20px;">
+                <li>3 Garrafas PET de 2L</li>
+                <img src="garrafas.jpg" alt="Garrafa PET" style="width: 300px; height: auto; margin-bottom: 20px;">
+                <li>Tesoura ou estilete (com supervisão de um adulto)</li>
+                <img src="cortantes.jpg" alt="Tesoura e Estilete" style="width: 300px; height: auto; margin-bottom: 20px;">
+                <li>Terra</li>
+                <img src="terra.jpg" alt="Terra" style="width: 300px; height: auto; margin-bottom: 20px;">
+                <li>Garrafinha PET de 200mL</li>
+                <img src="garrafinha.jpg" alt="Garrafinha PET" style="width: 300px; height: auto; margin-bottom: 20px;">
+                <li>Plantas pequenas ou grama </li>
+                ️<img src="plantas.jpg" alt="Plantas" style="width: 300px; height: auto; margin-bottom: 20px;">
+                <li>Gravetos e folhas</li>
+                <img src="folhas.jpg" alt="Gravetos e Folhas" style="width: 300px; height: auto; margin-bottom: 20px;">
+                <li>Pratos e vasilhas (No meu caso, utilizei de porcelana, mas se tiver prato fundo descartável fica ainda melhor!)</li>
+                <img src="pratos.jpg" alt="Pratos e Vasilhas" style="width: 300px; height: auto; margin-bottom: 20px;">
+            </ul>
+            <h2>Instruções:</h2>
+            <ul>
+                <li>Corte um retângulo no meio das três garrafas PET.</li>
+                <div class="grid-imagens">
+                <img src="cortando.jpg" alt="Corte na Garrafa PET">
+                <img src="garrafacortada.jpg" alt="Garrafa PET Cortada">
+                </div>
+                <li>Faça isso com todas as garrafas.</li>
+                <img src="garrafascortadas.jpg" alt="Caixas de Papelão Cortadas" style="width: 300px; height: auto; margin-bottom: 20px;">
+                <li>Corte a tampa da caixa de sapato, e faça um corte na lateral da caixa.</li>
+                <img src="caixacortada.jpg" alt="Caixa de Papelão Cortada" style="width: 300px; height: auto; margin-bottom: 20px;">
+                <li>Faça isso com todas as caixas.</li>
+                <img src="caixascortadas.jpg" alt="Caixas de Papelão Cortadas" style="width: 300px; height: auto; margin-bottom: 20px;">  
+                <li>Encaixe as garrafas nas caixas.</li>
+                <img src="caixascomgarrafa.jpg" alt="Caixa de Papelão com Garrafa PET" style="width: 300px; height: auto; margin-bottom: 20px;">
+                <li>Coloque um prato raso dentro da caixa, e um prato fundo fora.</li>
+                <img src="caixacompratos.jpg" alt="Caixa de Papelão com Pratos" style="width: 300px; height: auto; margin-bottom: 20px;">
+                <li>Na primeira garrafa, coloque somente terra.</li>
+                <img src="gcterra.jpg" alt="Garrafa PET com Terra" style="width: 300px; height: auto; margin-bottom: 20px;">
+                <li>Na segunda garrafa, encha de terra e coloque gravetos e folhas soltas por cima.</li>
+                <img src="gcfolha.jpg" alt="Garrafa PET com Terra, Gravetos e Folhas" style="width: 300px; height: auto; margin-bottom: 20px;">
+                <li>Na terceira garrafa, encha de terra, e coloque algumas plantinhas ou grama.</li>
+                <img src="gcgrama.jpg" alt="Garrafa PET com Terra e Plantas" style="width: 300px; height: auto; margin-bottom: 20px;">
+                <li>Coloque água na garrafinha, e faça vários furos na tampa.</li>
+                <img src="tampinhafurada.jpg" alt="Tampinha Furada" style="width: 300px; height: auto; margin-bottom: 20px;">
+                <li>Despeje a água lentamente no topo de cada garrafa, simulando a chuva.</li>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
+                <img src="jogandoagua.jpg" alt="Despejando água em uma garrafa" style="width: 300px; height: auto;">
+                <img src="jogandoagua2.jpg" alt="Despejando água em outra garrafa" style="width: 300px; height: auto;">
+                <img src="jogandoagua3.jpg" alt="Despejando água novamente" style="width: 300px; height: auto;">
+                </div>
+                <li>Observe a água que sai de cada garrafa e escorre para os pratos.</li>
+                <img src="resultado.jpg" alt="Resultado da Erosão" style="width: 300px; height: auto; margin-bottom: 20px;">
+            </ul>
+<h2>Resultados</h2> 
+<video class="video-center" width="600" height="400" controls>
+    <source src="SimuladorErosao.mp4" type="video/mp4">
+    Seu navegador não suporta o elemento de vídeo.
+</video>
+
+<p>Na primeira garrafa, a água levou muita terra embora, deixando buracos. Isso é a erosão do solo, que acontece quando a chuva forte leva a terra embora, deixando o solo pobre e sem nutrientes.</p> 
+<img src="resultadoterra.jpg" alt="Erosão do Solo - Garrafa 1" style="width: 300px; height: auto; margin-bottom: 20px;">
+<p>Na segunda garrafa, a água levou um pouco de terra, mas os gravetos e folhas ajudaram a segurar o solo no lugar. Isso mostra como a cobertura do solo com matéria orgânica pode ajudar a prevenir a erosão.</p> 
+<img src="resultadofolhas.jpg" alt="Erosão do Solo - Garrafa 2" style="width: 300px; height: auto; margin-bottom: 20px;">
+<p>Na terceira garrafa, a água quase não levou terra, porque as raízes das plantas seguraram o solo no lugar. Isso mostra como as plantas são importantes para proteger o solo da erosão.</p>
+<img src="resultadoplantas.jpg" alt="Erosão do Solo - Garrafa 3" style="width: 300px; height: auto; margin-bottom: 20px;">
+
+<h2>Tutorial em vídeo:</h2>
+<iframe class="video-center" width="560" height="315"
+    src="https://www.youtube.com/embed/fgkQg4Hm0JA?si=8h8JaHrcdANo-RdD"
+    title="YouTube video player" frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+
+<h2>Perguntas</h2>
+<div class="pergunta">
+    <p>1. O que é erosão do solo?</p>
+    <label><input type="radio" name="q1" value="a"> A) É quando a água leva a terra embora, formando buracos no solo.</label><br>
+    <label><input type="radio" name="q1" value="b"> B) É quando as plantas crescem muito rápido.</label><br>
+    <label><input type="radio" name="q1" value="c"> C) É quando o solo fica muito seco e duro.</label><br>
+</div>
+<div class="pergunta"> 
+    <p>2. Como as plantas ajudam a prevenir a erosão do solo?</p>
+    <label><input type="radio" name="q2" value="a"> A) Elas crescem muito rápido.</label><br>
+    <label><input type="radio" name="q2" value="b"> B) Elas seguram o solo no lugar com suas raízes.</label><br>
+    <label><input type="radio" name="q2" value="c"> C) Elas atraem insetos que comem a terra.</label><br>
+</div>
+<div class="pergunta">
+    <p>3. O que é cobertura do solo?</p>
+    <label><input type="radio" name="q3" value="a"> A) É quando o solo é coberto por água.</label><br>
+    <label><input type="radio" name="q3" value="b"> B) É quando o solo é coberto por plástico.</label><br>
+    <label><input type="radio" name="q3" value="c"> C) É quando o solo é coberto por plantas, folhas ou gravetos.</label><br>
+</div>
+<button onclick="verificarRespostas()">Verificar Respostas</button>
+<div id="resultado">
+    <p id="resultado-texto"></p>
+</div>
+<script>
+function verificarRespostas() {
+    const respostasCorretas = {
+        q1: 'a',
+        q2: 'b',
+        q3: 'c'
+    };
+    let acertos = 0;
+    let total = 0;
+
+    for (const [pergunta, resposta] of Object.entries(respostasCorretas)) {
+        const radios = document.getElementsByName(pergunta);
+        for (const radio of radios) {
+            if (radio.checked) {
+                total++;
+                if (radio.value === resposta) {
+                    acertos++;
+                    document.querySelector(`input[name="${pergunta}"][value="${resposta}"]`).parentElement.parentElement.classList.add('correta');
+                } else {
+                    document.querySelector(`input[name="${pergunta}"][value="${resposta}"]`).parentElement.parentElement.classList.add('errada');
+                }
+            }
+        }
+    }
+
+    const resultadoTexto = document.getElementById('resultado-texto');
+    resultadoTexto.textContent = `Você acertou ${acertos} de ${total} perguntas.`;
+}
+</script>
+      <footer>
+        <p>Desenvolvido e escrito por <a href="gaby.html" target="_blank">Gabrielly Barros</a></p>
+          <img src="ArcaLab.png" alt="Logo do ArcaLab" width="100" height="100">
+      </footer>
+    </body>
+</html>
