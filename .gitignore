@@ -1,0 +1,32 @@
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Images (keep only in assets/)
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.svg
+!assets/**/*.jpg
+!assets/**/*.jpeg
+!assets/**/*.png
+!assets/**/*.gif
+!assets/**/*.svg
+
+# Node modules (if used)
+node_modules/
+npm-debug.log
+
+# System files
+.env
+.env.local
+*.log
